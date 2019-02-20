@@ -8,7 +8,6 @@ namespace CodeFirstWeb.GraphQL
         public ShowManagerSchema(IDependencyResolver resolver) : base(resolver)
         {
             Query = resolver.Resolve<ShowManagerQuery>();
-
         }
     }
 }

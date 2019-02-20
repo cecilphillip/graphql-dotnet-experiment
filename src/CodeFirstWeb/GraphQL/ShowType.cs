@@ -20,14 +20,13 @@ namespace CodeFirstWeb.GraphQL
                 description: "The episodes associated with this show",
                 resolve: ctx =>
                 {
-                    // dataLoaderAccesor.Context.GetOrAddCollectionBatchLoader<string, Episode>("GetEpisodesByShowID", (epIds) =>
-                    // {
-                    //     var results = dataRepository.Episodes.Where(e => epIds.Contains(e.Show.Id)).ToLookup(e => e.Id);
-                    //     return Task.FromResult(results);
-                    // });
-                    return ctx.Source.Episodes;
+                  var dataLoader=  dataLoaderAccesor.Context.GetOrAddCollectionBatchLoader<string, Episode>("GetEpisodesByShowID", (epIds) =>
+                    {
+                        var results = dataRepository.Episodes.Where(e => epIds.Contains(e.Show.Id)).ToLookup(e => e.Id);
+                        return Task.FromResult(results);
+                    });
+                    return dataLoader.LoadAsync(ctx.Source.Id);
                 }
-
             );
         }
     }
